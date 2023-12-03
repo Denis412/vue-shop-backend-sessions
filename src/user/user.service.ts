@@ -36,7 +36,9 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  findOneById(id: string) {
+  async findOneById(id: string) {
+    console.log('id', id, await this.repository.findOneBy({ id }));
+
     return this.repository.findOneBy({ id });
   }
 

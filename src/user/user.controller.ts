@@ -38,7 +38,7 @@ export class UserController {
     return req.user;
   }
 
-  @Get('/logout')
+  @Post('/logout')
   logout(@Request() req): any {
     req.session.destroy();
     return { msg: 'The user session has ended' };
