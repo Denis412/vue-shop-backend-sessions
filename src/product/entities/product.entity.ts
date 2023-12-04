@@ -27,7 +27,7 @@ export class Product {
   @Column()
   image: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
   @ManyToOne(() => User, { nullable: false })

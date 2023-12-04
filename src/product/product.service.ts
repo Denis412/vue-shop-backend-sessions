@@ -60,10 +60,10 @@ export class ProductService {
   }
 
   update(id: string, input: UpdateProductDto) {
-    // return this.repository.save({ id, ...input });
+    return this.repository.save({ id, ...input });
   }
 
   remove(id: string) {
-    return `This action removes a #${id} product`;
+    return this.repository.delete(id);
   }
 }
