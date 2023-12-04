@@ -1,3 +1,5 @@
+import { ProductInCart } from 'src/product-in-cart/entities/product-in-cart.entity';
+import { ProductInOrder } from 'src/product-in-order/entities/product-in-order.entity';
 import { Product } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -8,6 +10,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -26,9 +29,8 @@ export class Order {
   @Column()
   email: string;
 
-  @ManyToMany(() => Product, { nullable: false })
-  @JoinTable()
-  products: Product[];
+  @OneToMany(() => ProductInOrder, (product) => product.order)
+  products: ProductInOrder[];
 
   @ManyToOne(() => User, { nullable: false })
   @JoinColumn({

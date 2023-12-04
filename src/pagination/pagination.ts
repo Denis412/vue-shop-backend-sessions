@@ -1,11 +1,19 @@
+import PaginatorOrderBy from 'src/types/orderBy';
+import PaginatorWhere from 'src/types/where';
 import {
   Brackets,
   EntityMetadata,
   Repository,
   SelectQueryBuilder,
 } from 'typeorm';
+import { PaginationInfo } from './dto/paginator-info.dto';
 
-function buildCondition(where, qb, entity: string, call?: string) {
+function buildCondition(
+  where: PaginatorWhere,
+  qb,
+  entity: string,
+  call?: string,
+) {
   if (where?.and) {
     qb.andWhere(
       new Brackets((subQb) => {
@@ -65,10 +73,11 @@ export default async function getPaginatorResults<T>(
   repository: Repository<T>,
   page: number,
   perPage: number,
-  where,
-  orderBy,
+  where: PaginatorWhere,
+  orderBy: PaginatorOrderBy,
   entity?: string,
 ) {
+  console.log('data', page, perPage, where, orderBy);
   const metadata = repository.metadata;
 
   const query = repository.createQueryBuilder(entity);
@@ -87,7 +96,7 @@ export default async function getPaginatorResults<T>(
 
   const totalPages = Math.ceil(totalElements / perPage);
 
-  const paginationMeta = {
+  const paginationMeta: PaginationInfo = {
     page,
     perPage,
     count: totalElements,

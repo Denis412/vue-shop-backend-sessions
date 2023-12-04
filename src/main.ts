@@ -25,6 +25,12 @@ async function bootstrap() {
       secret: 'keyboard',
       resave: false,
       saveUninitialized: false,
+      cookie: {
+        maxAge: 600000,
+        sameSite: 'none',
+        secure: true,
+        httpOnly: true,
+      },
     }),
   );
   app.use(passport.initialize());

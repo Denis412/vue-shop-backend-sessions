@@ -8,6 +8,8 @@ import { generateId } from 'src/helpers/generate-id.helper';
 import { UserService } from 'src/user/user.service';
 import { ProductService } from 'src/product/product.service';
 import { MailService } from 'src/mail/mail.service';
+import { ProductInOrderService } from 'src/product-in-order/product-in-order.service';
+import { ProductInCartService } from 'src/product-in-cart/product-in-cart.service';
 
 @Injectable()
 export class OrderService {
@@ -16,6 +18,8 @@ export class OrderService {
     private readonly userService: UserService,
     private readonly productService: ProductService,
     private readonly mailService: MailService,
+    private readonly productInCartService: ProductInCartService,
+    private readonly productInOrderService: ProductInOrderService,
   ) {}
 
   async create(input: CreateOrderDto, @Request() req) {
@@ -28,8 +32,11 @@ export class OrderService {
       );
     }
 
+    if (!input.products?.length) {
+      throw new NotFoundException(`Не передано обязательное поле products`);
+    }
     for (const index in input.products) {
-      const product = await this.productService.findOne(
+      const product = await this.productInCartService.findOne(
         input.products[index].objectId,
       );
 
@@ -42,10 +49,21 @@ export class OrderService {
       targetProducts.push(product);
     }
 
+    console.log('products in order', targetProducts);
+
+    for (const index in targetProducts) {
+      await this.productInOrderService.create({
+        product: targetProducts[index].product,
+        count: targetProducts[index].count,
+      });
+
+      await this.productInCartService.remove(targetProducts[index].id);
+    }
+
     const createdOrder = await this.repository.save({
       id: generateId(),
       author: targetAuthor,
-      email: targetAuthor.email,
+      email: targetAuthor.email ?? input.email,
       products: targetProducts,
     });
 

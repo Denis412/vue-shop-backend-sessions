@@ -7,4 +7,5 @@ export class CreateProductDto {
   price: number;
   type: number;
   author: RelationType;
+  category: RelationType;
 }

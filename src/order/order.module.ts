@@ -6,6 +6,8 @@ import { Order } from './entities/order.entity';
 import { UserModule } from 'src/user/user.module';
 import { ProductModule } from 'src/product/product.module';
 import { MailModule } from 'src/mail/mail.module';
+import { ProductInOrderModule } from 'src/product-in-order/product-in-order.module';
+import { ProductInCartModule } from 'src/product-in-cart/product-in-cart.module';
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { MailModule } from 'src/mail/mail.module';
     UserModule,
     ProductModule,
     MailModule,
+    ProductInOrderModule,
+    ProductInCartModule,
   ],
   controllers: [OrderController],
   providers: [OrderService],

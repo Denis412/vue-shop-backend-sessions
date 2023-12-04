@@ -1,19 +1,15 @@
-import {
-  BadRequestException,
-  Injectable,
-  Request,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, Request } from '@nestjs/common';
 import { CreateProductInCartDto } from './dto/create-product-in-cart.dto';
 import { UpdateProductInCartDto } from './dto/update-product-in-cart.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductInCart } from './entities/product-in-cart.entity';
-import { Brackets, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { generateId } from 'src/helpers/generate-id.helper';
 import { ProductService } from 'src/product/product.service';
 import { UserService } from 'src/user/user.service';
-import buildCondition from './pagination';
-import getPaginatorResults from './pagination';
+import getPaginatorResults from '../pagination/pagination';
+import Pagination from 'src/pagination/pagination.type';
+import { PaginatorWhereOperator } from 'src/types/paginator-where-operator';
 
 @Injectable()
 export class ProductInCartService {
@@ -34,6 +30,9 @@ export class ProductInCartService {
   }
 
   async create(input: CreateProductInCartDto, @Request() req) {
+    if (!req.user) {
+      return {};
+    }
     const targetProduct = await this.productService.findOne(
       input.product?.objectId,
     );
@@ -83,8 +82,31 @@ export class ProductInCartService {
     });
   }
 
-  findAll() {
-    return this.repository.find();
+  findAll(body: Pagination) {
+    return getPaginatorResults<ProductInCart>(
+      this.repository,
+      body.page,
+      body.perPage,
+      body.where,
+      body.orderBy,
+      'product_in_cart',
+    );
+  }
+
+  findMy(body: Pagination, @Request() req) {
+    console.log('req', req);
+    return getPaginatorResults<ProductInCart>(
+      this.repository,
+      body.page,
+      body.perPage,
+      {
+        column: 'user.id',
+        operator: PaginatorWhereOperator.EQ,
+        value: req.user?.user_id,
+      },
+      body.orderBy,
+      'product_in_cart',
+    );
   }
 
   findWithWhere(where) {
@@ -98,8 +120,17 @@ export class ProductInCartService {
     );
   }
 
-  findOne(id: string) {
-    return this.repository.findOneBy({ id });
+  async findOne(id: string) {
+    const products = await this.repository.find({
+      where: {
+        id: id,
+      },
+      relations: {
+        product: true,
+      },
+    });
+
+    return products[0];
   }
 
   update(id: string, input: UpdateProductInCartDto) {

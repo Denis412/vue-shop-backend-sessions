@@ -1,3 +1,4 @@
+import { ProductCategory } from 'src/product-category/entities/product-category.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   Column,
@@ -35,6 +36,13 @@ export class Product {
     referencedColumnName: 'id',
   })
   author: User;
+
+  @ManyToOne(() => ProductCategory, { nullable: false })
+  @JoinColumn({
+    name: 'category_id',
+    referencedColumnName: 'id',
+  })
+  category: ProductCategory;
 
   @CreateDateColumn()
   created_at: Date;
