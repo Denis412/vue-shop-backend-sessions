@@ -25,15 +25,15 @@ export class ProductService {
   }
 
   findAll() {
-    return `This action returns all product`;
+    return this.repository.find();
   }
 
   findOne(id: string) {
     return this.repository.findOneBy({ id });
   }
 
-  update(id: string, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(id: string, input: UpdateProductDto) {
+    // return this.repository.save({ id, ...input });
   }
 
   remove(id: string) {

@@ -9,6 +9,9 @@ import { ProductInCartModule } from './product-in-cart/product-in-cart.module';
 import { UserModule } from './user/user.module';
 import { OrderModule } from './order/order.module';
 import { AuthModule } from './auth/auth.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -23,12 +26,35 @@ import { AuthModule } from './auth/auth.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'd.a.malyshev22@gmail.com',
+          pass: 'Sites65_01_mn_ghty',
+        },
+      },
+      defaults: {
+        from: '"Coffee shop" <coffeeShop@coffee.com>',
+      },
+      template: {
+        // dir: process.cwd() + '/templates/',
+        dir: __dirname + '/templates',
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true,
+        },
+      },
+    }),
     CartModule,
     ProductModule,
     ProductInCartModule,
     UserModule,
     OrderModule,
     AuthModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

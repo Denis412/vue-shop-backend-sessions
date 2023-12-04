@@ -23,6 +23,7 @@ export class UserService {
     const createdUser = await this.repository.save({
       id: generateId(),
       ...input,
+      username: `user${generateId().slice(0, 5)}`,
       password: hashPassword,
     });
 

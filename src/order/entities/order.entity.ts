@@ -1,6 +1,7 @@
 import { Product } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -21,6 +22,9 @@ export class Order {
 
   //   @Column()
   //   description: string;
+
+  @Column()
+  email: string;
 
   @ManyToMany(() => Product, { nullable: false })
   @JoinTable()

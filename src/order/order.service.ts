@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { generateId } from 'src/helpers/generate-id.helper';
 import { UserService } from 'src/user/user.service';
 import { ProductService } from 'src/product/product.service';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class OrderService {
@@ -14,6 +15,7 @@ export class OrderService {
     @InjectRepository(Order) private readonly repository: Repository<Order>,
     private readonly userService: UserService,
     private readonly productService: ProductService,
+    private readonly mailService: MailService,
   ) {}
 
   async create(input: CreateOrderDto, @Request() req) {
@@ -40,11 +42,16 @@ export class OrderService {
       targetProducts.push(product);
     }
 
-    return this.repository.save({
+    const createdOrder = await this.repository.save({
       id: generateId(),
       author: targetAuthor,
+      email: targetAuthor.email,
       products: targetProducts,
     });
+
+    // await this.mailService.sendUserOrderInformation(targetAuthor, input.email);
+
+    return createdOrder;
   }
 
   findAll() {
