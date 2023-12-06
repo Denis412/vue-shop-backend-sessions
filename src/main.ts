@@ -20,9 +20,9 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         maxAge: 600000,
-        sameSite: 'none',
-        secure: true,
-        httpOnly: true,
+        sameSite: 'strict',
+        secure: false,
+        httpOnly: false,
       },
     }),
   );
