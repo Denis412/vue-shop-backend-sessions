@@ -14,7 +14,6 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { MailModule } from './mail/mail.module';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { ProductInOrderModule } from './product-in-order/product-in-order.module';
-import { FileModule } from './file/file.module';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
@@ -66,7 +65,6 @@ import { MulterModule } from '@nestjs/platform-express';
     MailModule,
     ProductCategoryModule,
     ProductInOrderModule,
-    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
