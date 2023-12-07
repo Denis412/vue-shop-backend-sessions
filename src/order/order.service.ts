@@ -67,7 +67,7 @@ export class OrderService {
       products: targetProducts,
     });
 
-    // await this.mailService.sendUserOrderInformation(targetAuthor, input.email);
+    await this.mailService.sendUserOrderInformation(targetAuthor, input.email);
 
     return createdOrder;
   }

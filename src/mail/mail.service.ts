@@ -10,10 +10,12 @@ export class MailService {
     // const url = `example.com/auth/confirm?token=${token}`;
 
     await this.mailerService.sendMail({
-      to: user.email,
-      from: '"Support Team" <support@example.com>', // override default from
-      subject: 'Welcome to Nice App! Confirm your Email',
-      html: '<div>Hello</div>',
+      to: user.email || email,
+      from: '"Coffee shop" <denis3674@bk.ru>', // override default from
+      subject: 'Спасибо за заказ!',
+      html: `<div>
+      Ваш заказ создан и в ближайшее время будет обработан!
+      </div>`,
       // template: './createOrder', // `.hbs` extension is appended automatically
       context: {
         // ✏️ filling curly brackets with content

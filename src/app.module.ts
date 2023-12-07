@@ -36,16 +36,16 @@ import { MulterModule } from '@nestjs/platform-express';
     }),
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.gmail.com',
+        host: 'smtp.mail.ru',
         port: 465,
         secure: true,
         auth: {
-          user: 'd.a.malyshev22@gmail.com',
-          pass: 'Sites65_01_mn_ghty',
+          user: 'denis3674@bk.ru',
+          pass: 'uPj2j9yL4V49tKJ0Pr2p',
         },
       },
       defaults: {
-        from: '"Coffee shop" <coffeeShop@coffee.com>',
+        from: '"Coffee shop" <denis3674@bk.ru>',
       },
       template: {
         // dir: process.cwd() + '/templates/',
