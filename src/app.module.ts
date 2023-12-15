@@ -15,6 +15,7 @@ import { MailModule } from './mail/mail.module';
 import { ProductCategoryModule } from './product-category/product-category.module';
 import { ProductInOrderModule } from './product-in-order/product-in-order.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { CouponModule } from './coupon/coupon.module';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import { MulterModule } from '@nestjs/platform-express';
     MailModule,
     ProductCategoryModule,
     ProductInOrderModule,
+    CouponModule,
   ],
   controllers: [AppController],
   providers: [AppService],

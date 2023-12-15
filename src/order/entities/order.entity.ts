@@ -1,3 +1,4 @@
+import { Coupon } from 'src/coupon/entities/coupon.entity';
 import { ProductInCart } from 'src/product-in-cart/entities/product-in-cart.entity';
 import { ProductInOrder } from 'src/product-in-order/entities/product-in-order.entity';
 import { Product } from 'src/product/entities/product.entity';
@@ -31,6 +32,16 @@ export class Order {
 
   @OneToMany(() => ProductInOrder, (product) => product.order)
   products: ProductInOrder[];
+
+  @ManyToOne(() => Coupon)
+  @JoinColumn({
+    name: 'coupon_id',
+    referencedColumnName: 'id',
+  })
+  coupon: Coupon;
+
+  @Column({ type: 'float' })
+  price: number;
 
   @ManyToOne(() => User, { nullable: false })
   @JoinColumn({
