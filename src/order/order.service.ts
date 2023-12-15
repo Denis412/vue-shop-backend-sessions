@@ -78,7 +78,11 @@ export class OrderService {
       coupon: targetCoupon,
     });
 
-    await this.mailService.sendUserOrderInformation(targetAuthor, input.email);
+    await this.mailService.sendUserOrderInformation(
+      targetAuthor,
+      input.email,
+      createdOrder,
+    );
 
     return createdOrder;
   }

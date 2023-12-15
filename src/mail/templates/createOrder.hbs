@@ -1,11 +1,31 @@
 <html>
+  <head>
+    <title>Чек по заказу</title>
+
+  </head>
   <body>
-    <p>Hey {{name}},</p>
-    <p>Please click below to confirm your email</p>
+    <h1>Спасибо за заказ на нашей площадке CoffeeShop!</h1>
+
+    <ul>
+      Список заказанных вами товаров:
+
+      {{#each products}}
+        <li>
+          {{this.label}} {{this.count}} шт. - {{this.price}} Р
+        </li>
+      {{/each}}
+    </ul>
+
     <p>
-      {{!-- <a href='{{url}}'>Confirm</a> --}}
+      Общая сумма заказа: {{price}}
     </p>
 
-    <p>If you did not request this email you can safely ignore it.</p>
+    {{#if discount}}
+    <p>Ваша скидка: {{discount}}%</p>
+
+    <p>
+      Сумма заказа с учетом скидки: {{discountPrice}}
+    </p>
+    {{/if}}
   </body>
 </html>

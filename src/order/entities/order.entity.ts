@@ -7,6 +7,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
   JoinColumn,
   JoinTable,
   ManyToMany,
@@ -26,6 +27,10 @@ export class Order {
 
   //   @Column()
   //   description: string;
+
+  // @Column({ type: 'int', unique: true })
+  // @Generated('increment')
+  // num: number;
 
   @Column()
   email: string;
