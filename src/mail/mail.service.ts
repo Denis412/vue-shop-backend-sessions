@@ -77,6 +77,7 @@ export class MailService {
           return sum + pr.product.price * pr.count;
         }, 0),
         discountPrice: order.price,
+        num: order.num,
       },
     };
 

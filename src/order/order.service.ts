@@ -69,6 +69,11 @@ export class OrderService {
       await this.productInCartService.remove(targetProducts[index].id);
     }
 
+    const maxNum = await this.repository
+      .createQueryBuilder('order')
+      .select('MAX(order.num)', 'maxNum')
+      .getRawOne();
+
     const createdOrder = await this.repository.save({
       id: generateId(),
       price: input.price,
@@ -76,6 +81,7 @@ export class OrderService {
       email: targetAuthor.email ?? input.email,
       products: targetProducts,
       coupon: targetCoupon,
+      num: maxNum.maxNum + 1,
     });
 
     await this.mailService.sendUserOrderInformation(

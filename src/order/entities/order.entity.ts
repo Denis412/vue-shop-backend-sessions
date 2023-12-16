@@ -3,7 +3,9 @@ import { ProductInCart } from 'src/product-in-cart/entities/product-in-cart.enti
 import { ProductInOrder } from 'src/product-in-order/entities/product-in-order.entity';
 import { Product } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
+import { getManager } from 'typeorm';
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -14,6 +16,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -28,9 +31,8 @@ export class Order {
   //   @Column()
   //   description: string;
 
-  // @Column({ type: 'int', unique: true })
-  // @Generated('increment')
-  // num: number;
+  @Column()
+  num: number;
 
   @Column()
   email: string;
