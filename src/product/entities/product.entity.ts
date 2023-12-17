@@ -18,6 +18,9 @@ export class Product {
   @Column({ nullable: false })
   label: string;
 
+  @Column()
+  label_en: string;
+
   @Column({ type: 'int', default: 1 })
   type: number;
 

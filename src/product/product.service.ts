@@ -44,8 +44,19 @@ export class ProductService {
     });
   }
 
-  findAll(body: Pagination) {
-    return getPaginatorResults<Product>(
+  async findAll(body: Pagination) {
+    console.log(
+      'res',
+      await getPaginatorResults<Product>(
+        this.repository,
+        body.page,
+        body.perPage,
+        body.where,
+        body.orderBy,
+        'product',
+      ),
+    );
+    return await getPaginatorResults<Product>(
       this.repository,
       body.page,
       body.perPage,
